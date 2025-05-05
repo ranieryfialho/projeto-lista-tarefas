@@ -5,258 +5,513 @@
     border: 0;
     box-sizing: border-box;
     list-style: none;
-    text-decoration: 0;
+    text-decoration: none;
     outline: none;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: #efefef;
-}
-
-header {
-    background-color: cornflowerblue;
-    padding: 16px 120px;
-}
-
-header input {
+  }
+  
+  :root {
+    --primary-color: cornflowerblue;
+    --primary-dark: rgb(51, 98, 185);
+    --success-color: #4caf50;
+    --text-color: #333;
+    --text-light: #666;
+    --text-lighter: #999;
+    --bg-color: #efefef;
+    --card-color: white;
+    --shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    
+    /* Espaçamentos responsivos */
+    --spacing-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+    --spacing-sm: clamp(0.5rem, 1vw, 1rem);
+    --spacing-md: clamp(1rem, 2vw, 1.5rem);
+    --spacing-lg: clamp(1.5rem, 3vw, 2.5rem);
+    --spacing-xl: clamp(2rem, 4vw, 3.5rem);
+    
+    /* Tamanhos de fonte responsivos */
+    --font-xs: clamp(0.75rem, 1vw, 0.875rem);
+    --font-sm: clamp(0.875rem, 1.5vw, 1rem);
+    --font-md: clamp(1rem, 2vw, 1.25rem);
+    --font-lg: clamp(1.25rem, 2.5vw, 1.5rem);
+    --font-xl: clamp(1.5rem, 3vw, 2rem);
+    --font-xxl: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  
+  html {
+    font-size: 16px;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* Container principal */
+  .container {
     width: 100%;
-    height: 60px;
-    padding: 0 10px;
-    border-radius: 8px;
-    font-size: 18px;
-}
-
-#tarefas {
-    padding: 60px 120px;
-}
-
-#tarefas h2 {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+  
+  /* Header */
+  header {
+    background-color: var(--primary-color);
+    padding: var(--spacing-md);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  header input {
+    width: 100%;
+    height: 3rem;
+    padding: 0 var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-size: var(--font-md);
+    transition: box-shadow 0.2s;
+  }
+  
+  header input:focus {
+    box-shadow: 0 0 0 2px rgba(100, 149, 237, 0.3);
+  }
+  
+  /* Tarefas Section */
+  #tarefas {
+    padding: var(--spacing-lg) var(--spacing-md);
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  #tarefas h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 48px;
-}
-
-#tarefas h2 button {
-    height: 46px;
-    background-color: cornflowerblue;
+    font-size: var(--font-xxl);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+  
+  #tarefas h2 button {
+    height: 3rem;
+    background-color: var(--primary-color);
     color: white;
-    font-size: 12px;
+    font-size: var(--font-sm);
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: .75px;
-    padding: 0 26px;
+    letter-spacing: 0.75px;
+    padding: 0 var(--spacing-lg);
     border-radius: 5px;
     cursor: pointer;
-    transition-duration: 200ms;
-}
-
-#tarefas h2 button:hover {
-    background-color: rgb(51, 98, 185);
-}
-
-#tarefas h6 {
+    transition: background-color 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  
+  #tarefas h2 button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  #tarefas h2 button:active {
+    transform: scale(0.98);
+  }
+  
+  #tarefas h6 {
     text-align: center;
-    font-size: 24px;
-    color: #999;
-}
-
-#tarefas ul {
+    font-size: var(--font-lg);
+    color: var(--text-lighter);
+    margin: var(--spacing-lg) 0;
+  }
+  
+  /* Lista de Tarefas - Grid Responsivo */
+  #tarefas ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
+  
+  #tarefas ul li {
+    padding: var(--spacing-md);
+    background-color: var(--card-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 36px;
-}
-
-#tarefas ul li {
-    width: calc(25% - 12px);
-    padding: 16px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 5px 10px #00000015;
-    display: initial;
-}
-
-#tarefas ul li.oculto {
+    flex-direction: column;
+  }
+  
+  #tarefas ul li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  #tarefas ul li.oculto {
     display: none;
-}
-
-/* Estilos para tarefas concluídas */
-#tarefas ul li.concluida {
+  }
+  
+  /* Estilos para tarefas concluídas */
+  #tarefas ul li.concluida {
     background-color: #f9fff9;
-    border-left: 4px solid #4caf50;
-}
-
-#tarefas ul li h5 {
-    font-size: 16px;
-    margin-bottom: 16px;
+    border-left: 4px solid var(--success-color);
+  }
+  
+  #tarefas ul li h5 {
+    font-size: var(--font-lg);
+    margin-bottom: var(--spacing-md);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-#tarefas ul li h5.concluida,
-#tarefas ul li p.concluida {
+    align-items: flex-start;
+    word-break: break-word;
+    line-height: 1.3;
+  }
+  
+  #tarefas ul li h5.concluida,
+  #tarefas ul li p.concluida {
     text-decoration: line-through;
-    text-decoration-color: #4caf50;
+    text-decoration-color: var(--success-color);
     text-decoration-thickness: 2px;
-    color: #666;
-}
-
-#tarefas ul li h5 div {
+    color: var(--text-light);
+  }
+  
+  #tarefas ul li p {
+    font-size: var(--font-md);
+    line-height: 1.5;
+    color: var(--text-light);
+    word-break: break-word;
+    flex-grow: 1;
+  }
+  
+  /* Botões de ação */
+  #tarefas ul li h5 div {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    gap: 4px;
-}
-
-#tarefas ul li h5 #delete {
-    display: flex;
-    justify-content: flex-end;
+    gap: var(--spacing-xs);
+    margin-left: var(--spacing-sm);
+    flex-shrink: 0;
+  }
+  
+  #tarefas ul li h5 box-icon {
     cursor: pointer;
-    fill: #999;
-    transition-duration: 200ms;
-}
-
-#tarefas ul li h5 #delete:hover {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
+    transition: fill 0.2s, transform 0.1s;
+    min-width: 24px;
+    min-height: 24px;
+  }
+  
+  #tarefas ul li h5 box-icon:active {
+    transform: scale(0.9);
+  }
+  
+  #tarefas ul li h5 #delete {
+    fill: var(--text-lighter);
+  }
+  
+  #tarefas ul li h5 #delete:hover {
     fill: red;
-}
-
-#tarefas ul li h5 #edit {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    fill: #999;
-    transition-duration: 200ms;
-}
-
-#tarefas ul li h5 #edit:hover {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    fill: cornflowerblue;
-}
-
-#tarefas ul li h5 #check {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    transition-duration: 200ms;
-}
-
-#tarefas ul li h5 #check:hover {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    fill: #4caf50 !important;
-}
-
-#overlay {
+  }
+  
+  #tarefas ul li h5 #edit {
+    fill: var(--text-lighter);
+  }
+  
+  #tarefas ul li h5 #edit:hover {
+    fill: var(--primary-color);
+  }
+  
+  #tarefas ul li h5 #check:hover {
+    fill: var(--success-color) !important;
+  }
+  
+  /* Modal */
+  #overlay {
     width: 100%;
     height: 100%;
-    background-color: #00000080;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 100;
     visibility: hidden;
     opacity: 0;
-    transition-duration: 200ms;
-}
-
-#overlay.active {
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  #overlay.active {
     opacity: 1;
     visibility: visible;
-}
-
-.modal {
-    width: 400px;
+  }
+  
+  .modal {
+    width: min(90%, 500px);
     background-color: white;
-    padding: 16px;
-    border-radius: 10px;
+    padding: var(--spacing-lg);
+    border-radius: 12px;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
+    transform: translate(-50%, -50%) scale(0.95);
+    z-index: 101;
     visibility: hidden;
     opacity: 0;
-    transition-duration: 200ms;
-}
-
-.modal.active {
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal.active {
     opacity: 1;
     visibility: visible;
-}
-
-.modal form h3 {
-    font-size: 24px;
-    color: #999;
-    margin-bottom: 26px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .modal form h3 {
+    font-size: var(--font-xl);
+    color: var(--text-color);
+    margin-bottom: var(--spacing-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.modal form h3 box-icon {
-    fill: #999;
+  }
+  
+  .modal form h3 box-icon {
+    fill: var(--text-lighter);
     cursor: pointer;
-}
-
-.modal form h3 box-icon:hover {
-    fill: cornflowerblue;
-    cursor: pointer;
-}
-
-.modal form label {
+    transition: fill 0.2s;
+    min-width: 24px;
+    min-height: 24px;
+  }
+  
+  .modal form h3 box-icon:hover {
+    fill: var(--primary-color);
+  }
+  
+  .modal form label {
     display: block;
-    font-size: 12px;
+    font-size: var(--font-sm);
     font-weight: bold;
-    letter-spacing: .75px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    margin-bottom: 6px;
-}
-
-.modal form input,
-.modal form textarea {
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-color);
+  }
+  
+  .modal form input,
+  .modal form textarea {
     width: 100%;
-    height: 46px;
     border: 2px solid #dedede;
     border-radius: 5px;
-    margin-bottom: 16px;
-    padding-left: 10px;
-    transition-duration: 200ms;
-}
-
-.modal form input:focus,
-.modal form textarea:focus {
-    border-color: cornflowerblue;
-}
-
-.modal form textarea {
-    padding-top: 10px;
-    height: 120px;
-}
-
-.modal form button {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-md);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .modal form input {
+    height: 3rem;
+  }
+  
+  .modal form textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  
+  .modal form input:focus,
+  .modal form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.2);
+  }
+  
+  .modal form button {
     width: 100%;
-    height: 46px;
-    background-color: cornflowerblue;
+    height: 3rem;
+    background-color: var(--primary-color);
     color: white;
-    font-size: 12px;
+    font-size: var(--font-md);
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: .75px;
-    padding: 0 26px;
+    letter-spacing: 0.75px;
     border-radius: 5px;
     cursor: pointer;
-    transition-duration: 200ms;
-}
-
-.modal form button:hover {
-    background-color: rgb(49, 98, 189);
-}
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .modal form button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .modal form button:active {
+    transform: scale(0.98);
+  }
+  
+  /* Responsividade Aprimorada */
+  @media (max-width: 1400px) {
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+    }
+  }
+  
+  @media (max-width: 900px) {
+    #tarefas h2 {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #tarefas h2 {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-sm);
+    }
+    
+    #tarefas h2 button {
+      width: 100%;
+    }
+    
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+    }
+    
+    .modal {
+      padding: var(--spacing-md);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    #tarefas ul {
+      grid-template-columns: 1fr;
+    }
+    
+    #tarefas ul li h5 {
+      flex-wrap: wrap;
+    }
+    
+    #tarefas ul li h5 div {
+      margin-top: var(--spacing-xs);
+      margin-left: 0;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    header {
+      padding: var(--spacing-sm);
+    }
+    
+    header input {
+      height: 2.5rem;
+    }
+    
+    #tarefas {
+      padding: var(--spacing-md) var(--spacing-sm);
+    }
+    
+    .modal {
+      width: 95%;
+      padding: var(--spacing-sm);
+    }
+    
+    .modal form h3 {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .modal form input {
+      height: 2.5rem;
+    }
+    
+    .modal form button {
+      height: 2.5rem;
+    }
+  }
+  
+  /* Suporte para telas muito grandes */
+  @media (min-width: 1800px) {
+    html {
+      font-size: 18px;
+    }
+    
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+  }
+  
+  @media (min-width: 2400px) {
+    html {
+      font-size: 20px;
+    }
+    
+    #tarefas ul {
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+  }
+  
+  /* Melhorias para acessibilidade em dispositivos touch */
+  @media (hover: none) {
+    #tarefas ul li:hover {
+      transform: none;
+      box-shadow: var(--shadow);
+    }
+    
+    #tarefas ul li h5 box-icon {
+      min-width: 30px;
+      min-height: 30px;
+      padding: 3px;
+    }
+    
+    .modal form input,
+    .modal form textarea,
+    .modal form button {
+      font-size: 16px; /* Evita zoom automático em iOS */
+    }
+  }
+  
+  /* Orientação Paisagem em Dispositivos Móveis */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .modal {
+      top: 0;
+      transform: translate(-50%, 0) scale(0.95);
+      height: 100vh;
+      border-radius: 0;
+    }
+    
+    .modal.active {
+      transform: translate(-50%, 0) scale(1);
+    }
+    
+    .modal form {
+      padding-bottom: var(--spacing-lg);
+    }
+  }
+  
+  /* Animações */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #tarefas ul li {
+    animation: fadeIn 0.3s ease-out;
+  }
